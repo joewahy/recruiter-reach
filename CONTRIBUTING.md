@@ -1,0 +1,29 @@
+# Working together
+
+Read AGENTS.md and docs/LEARNING_PLAN.md first. Owner A is @lakerss6 (the user); Owner B is @joewahy (their friend), based on the supplied username order. Owners below are proposals, not GitHub assignments. Each person both implements and reviews; rotate responsibilities each milestone.
+
+## One issue, one branch, one small PR
+
+1. Agree which issue you own and read its dependencies.
+2. Start from the team's agreed integration branch. The repository currently starts on `1-create-a-project-first`; do not assume `main` exists until the first commit is published.
+3. Create a descriptive branch, such as `feat/rr-03-name-search` or `fix/rr-04-filter-reset`.
+4. Make a small change, run the relevant checks, and inspect `git diff` and `git status` before committing.
+5. Open a PR explaining behavior, verification, and what you learned. Your partner reviews it.
+6. Resolve feedback and merge according to your team's agreed workflow. Pull the updated integration branch before starting the next task.
+
+Never both edit the same shared file without coordinating. RR-03 should expose a search component boundary before RR-04 adds filters. Agree on types and exports together before splitting work. Ask before adding dependencies or changing a shared contract.
+
+## Review checklist
+
+- Can the reviewer explain the change without the author narrating every line?
+- Does the feature meet the issue's acceptance criteria and demo labeling rules?
+- Are errors, empty input, repeated clicks, and keyboard access handled where relevant?
+- Did the author run typecheck/build and any tests relevant to changed behavior?
+- Are there no secrets, real contact data, generated build output, or accidental unrelated changes?
+- Can both people reproduce the reported behavior?
+
+Record bugs using the bug template: reproduction, expected/actual behavior, environment, and evidence. Avoid secrets or real personal details in logs and screenshots. Do not fix an unreported bug by hiding its error message.
+
+## Suggested pairing rhythm
+
+Start each milestone with a 15-minute contract discussion. Implement separately where possible, swap reviews, and end with a short demo and one lesson each. Estimates in the plan are practice-session ranges, not deadlines. Ask for hints before asking an agent to implement an entire learning issue.
