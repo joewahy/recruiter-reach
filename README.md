@@ -50,7 +50,7 @@ No broken behavior has been intentionally planted. Debugging exercises run on di
 
 ## First session together
 
-Both run the app, trace how the fixture reaches the page, and each change one profile locally. Then read the learning plan, agree on owners, and take RR-01 and RR-02. Owner A is @lakerss6 and owner B is @joewahy. Assignments are recorded locally; GitHub issue publication remains pending. Do not build all six milestones at once.
+Both run the app, trace how the fixture reaches the page, and each change one profile locally. Then read the learning plan, agree on owners, and take RR-01 and RR-02. Owner A is @lakerss6 and owner B is @joewahy. Assignments are recorded locally; Publishing and assigning all 12 issues is authorized and awaits authenticated GitHub access. Both collaborators are beginners; start with the guided first steps in each issue. Do not build all six milestones at once.
 
 ## Technical reference
 

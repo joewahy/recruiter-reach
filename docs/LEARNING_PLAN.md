@@ -4,7 +4,7 @@ Scope: gradually complete the demo experience, then add a persistent foundation.
 
 Only the minimal starter is implemented. No later milestone is marked complete.
 
-**Suggested task split:** A = @lakerss6 (you), B = @joewahy (your friend), using the supplied username order. Experience levels are still pending; task assignments are local and have not been applied to GitHub. Alternate implementation/review duties so neither person is confined to frontend or backend. Milestones are practice sessions, not a six-week commitment.
+**Suggested task split:** A = @lakerss6 (you), B = @joewahy (your friend), using the supplied username order. Both collaborators are beginners. Publishing and assigning all 12 issues on `joewahy/recruiter-reach` is authorized; authenticated GitHub access is still needed, so assignments currently remain local. Alternate implementation/review duties so neither person is confined to frontend or backend. Milestones are practice sessions, not a six-week commitment.
 
 | Milestone | Outcome | @lakerss6 (A) | @joewahy (B) | Suggested effort each |
 | --- | --- | --- | --- | --- |
@@ -15,7 +15,21 @@ Only the minimal starter is implemented. No later milestone is marked complete.
 | 5. Outreach demo | Compose messages and approve each simulated send | RR-10: approval/simulation service | RR-09: composer | 3–4 sessions |
 | 6. Follow-ups and persistence | Due drafts, stop rules, then a persistence slice | RR-11: sequence domain rules | RR-12: PostgreSQL/auth design and first slice | 3–5 sessions |
 
-One session can be roughly 60–90 focused minutes; adjust to your schedules. RR-12 is intentionally gated: agree on auth and database setup before building it. If milestone 6 grows, split RR-12 into smaller child issues rather than rushing it.
+One session can be roughly 60–90 focused minutes; adjust to your schedules. Both developers are beginners: treat these estimates as rough planning only and take as many sessions as needed. RR-12 is intentionally gated: agree on auth and database setup before building it. If milestone 6 grows, split RR-12 into smaller child issues rather than rushing it.
+
+## Beginner working method
+
+Start only RR-01 and RR-02 now. Read the issue together, then work on one acceptance criterion at a time. A checkbox is done when you can demonstrate it, not merely when the code compiles.
+
+1. Read the starting files and explain their current behavior out loud.
+2. Make one small change. Run the app and inspect the result.
+3. Run typecheck; read the first error before changing more code.
+4. Ask your partner to review and explain the change back to you.
+5. Write one learning note and commit a small, working step.
+
+Use the guided first steps in each issue. Ask an agent for an explanation or a hint first; ask for a full implementation only when you deliberately want to hand off that task. You do not need to understand authentication, database migrations, or job queues to begin.
+
+Vocabulary: a **component** renders part of the UI; **props** are inputs to a component; **state** is changing application data; a **type** describes a value's expected shape; an **API endpoint** handles a network request; **persistence** keeps data after a reload or restart; a **migration** changes database structure; **authentication** identifies the user, while **authorization** decides what that user can access; **idempotency** means retrying an operation does not repeat its effect.
 
 ## Gates and dependencies
 
