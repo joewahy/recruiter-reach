@@ -2,6 +2,7 @@
   "name": "recruiter-reach",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "engines": {
     "node": ">=22.13.0"
   },
@@ -9,7 +10,9 @@
     "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "find": "node --experimental-strip-types --env-file-if-exists=.env.local scripts/find.ts",
+    "test": "node --experimental-strip-types --test \"tests/**/*.test.ts\""
   },
   "devDependencies": {
     "@types/node": "^26.6.5",

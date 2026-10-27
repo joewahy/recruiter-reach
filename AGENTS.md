@@ -19,7 +19,16 @@ These decisions were explicitly confirmed on October 26, 2026:
 - Stack: Next.js, TypeScript, and PostgreSQL as the proposed implementation default.
 - Ask focused questions at meaningful decision points and confirm shared understanding before making consequential product choices.
 
-The user subsequently requested a minimal runnable starter for two collaborators, `lakerss6` (the user) and `joewahy` (their friend). Implement only the small starter now. Both collaborators confirmed they are beginners. The earlier six-milestone learning plan and its 12 issues were dropped at the user's request; there is no learning roadmap yet, and a replacement will be agreed separately. See `docs/LEARNING_PLAN.md` for the beginner working method. Teach in small steps, define unfamiliar terms, and leave implementation of learning tasks to the collaborators unless asked. Do not complete all learning tasks on the learners' behalf unless asked. No live services or delivery are authorized by the starter request.
+The user subsequently requested a minimal runnable starter for two collaborators, `lakerss6` (the user) and `joewahy` (their friend). The starter is implemented. Both collaborators confirmed they are beginners. The earlier six-milestone learning plan and its 12 issues were dropped at the user's request; there is no learning roadmap yet, and a replacement will be agreed separately. See `docs/LEARNING_PLAN.md` for the beginner working method. Teach in small steps, define unfamiliar terms, and leave implementation of learning tasks to the collaborators unless asked. Do not complete all learning tasks on the learners' behalf unless asked. The starter request itself authorized no live services or delivery.
+
+The user then reprioritized (October 26, 2026): a **working tool matters more than the UI**, with the objective of locating recruiter emails in order to get hired. Confirmed choices, tracked in [issue #16](https://github.com/joewahy/recruiter-reach/issues/16):
+
+- **Email finder first, UI later.** This is a working-first slice that precedes the Milestone 1 UI. It does not replace Milestone 1.
+- **Data sources: both.** Hunter.io when `HUNTER_API_KEY` is set (discovery by company domain, or Email Finder by name), and a free pattern guesser as fallback. This is a narrow, user-approved use of a live provider for lookup only; it is the finder's first provider, not the final Milestone 3 provider decision.
+- **Interfaces: both.** A CLI (`npm run find`) and `GET /api/find`, sharing the core in `src/server/finder/`.
+- **Still not authorized:** sending email, mailbox connections, accounts, a database, personal email or phone discovery, scraping, and deployment. Every-message approval still governs any future sending.
+- The Hunter key comes only from the environment (`.env.local`, git-ignored). Lookups may use credits on the user's Hunter plan; keep that disclosed in the README and CLI help.
+- Guessed addresses are always `unverified`. If Hunter returns HTTP 451 for a person, return no address and do not guess one.
 
 ## 3. Collaboration rules
 
@@ -187,6 +196,8 @@ src/features/             search, contacts, lists, outreach, approvals
 src/server/domain/        business rules and state transitions
 src/server/db/            persistence and transaction helpers
 src/server/providers/     discovery, verification, and mailbox adapters
+src/server/finder/        implemented: email finder core (Hunter adapter, pattern guesser, domain checks)
+scripts/                  implemented: CLI entry points (find.ts)
 src/server/jobs/          scheduling and durable task handlers
 src/server/auth/          session and authorization helpers
 src/lib/                  shared utilities and validation
@@ -195,6 +206,8 @@ tests/                    meaningful domain and end-to-end tests
 ```
 
 Define internal provider contracts for `searchPeople`, `searchCompanies`, `lookupPerson`, `getLookupStatus`, `verifyEmail`, `sendMessage`, and `syncReplies` as applicable. Normalize external statuses and errors at the adapter boundary. Discovery, verification, and mailbox providers may be different vendors.
+
+The finder in `src/server/finder/` predates these contracts. It normalizes Hunter statuses at its adapter boundary (`mapHunterStatus`) and can be moved behind `lookupPerson`/`verifyEmail` when the provider layer is built. It runs on Node's built-in TypeScript stripping, so use relative imports with `.ts` extensions and erasable syntax only (no enums or parameter properties) in files the CLI or tests import.
 
 Demo adapters must exercise the same domain interfaces as live adapters. Demo mode must never fall through to a live provider. Production must not silently fall back to fabricated contacts or simulated delivery.
 
@@ -271,6 +284,8 @@ Run checks appropriate to each implemented change. Prioritize tests for behavior
 - Timezone and business-day calculations handle daylight-saving boundaries.
 - Demo mode cannot send real email or invoke paid discovery.
 
+Covered today for the email finder by `npm test` (fake Hunter `fetch` and DNS, no network): domain normalization, unverified guesses, status mapping, role filtering, API key sent in a header and not the URL, 451 not guessed, safe error messages, and concurrent duplicate lookups sharing one provider call. Not yet verified against a live Hunter account.
+
 Milestone 1 is complete when a user can search synthetic recruiters, simulate an email reveal, save a list, connect a contact to an opportunity, compose an introduction and follow-ups, approve each simulated message individually, and observe a simulated reply stopping the sequence. Empty, loading, error, and disconnected states must also work.
 
 Document setup, environment variables, demo behavior, migration steps when relevant, and the commands actually used for validation in the README. Do not claim unrun tests passed. Do not commit secrets, deploy, purchase a provider plan, or make live outreach part of a demo milestone.
@@ -279,7 +294,7 @@ Document setup, environment variables, demo behavior, migration steps when relev
 
 - Primary geography, languages, and target industries.
 - Whether users search from a specific job posting or begin with companies and people.
-- Contact-data provider, permitted uses, budget, and lookup billing behavior.
+- Contact-data provider for Milestone 3, permitted uses, budget, and lookup billing behavior (Hunter is only the email finder's first provider; its plan limits and terms are still unreviewed).
 - Gmail versus Microsoft versus another mailbox integration.
 - Authentication provider and deployment host.
 - Whether AI-assisted writing, resumes, attachments, imports, or paid plans belong in a later milestone.
