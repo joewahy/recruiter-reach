@@ -179,3 +179,25 @@ export async function hunterEmailFinder(
     sourceUrls: sourceUrls(data.sources),
   };
 }
+
+export type HunterUsage = { used: number; available: number };
+
+export type HunterAccount = {
+  plan: string | null;
+  resetDate: string | null;
+  /** Keyed by Hunter's own usage names (for example searches, verifications, credits). */
+  usage: Record<string, HunterUsage>;
+};
+
+/** Hunter's account endpoint does not use credits, so it is the safe way to check that a key works. */
+export async function hunterAccount(apiKey: string, fetchImpl: FetchLike): Promise<HunterAccount> {
+  const data = record(record(await hunterGet("/account", {}, apiKey, fetchImpl)).data);
+  const usage: Record<string, HunterUsage> = {};
+  for (const [name, value] of Object.entries(record(data.requests))) {
+    const entry = record(value);
+    if (typeof entry.used === "number" && typeof entry.available === "number") {
+      usage[name] = { used: entry.used, available: entry.available };
+    }
+  }
+  return { plan: text(data.plan_name), resetDate: text(data.reset_date), usage };
+}

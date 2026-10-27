@@ -25,7 +25,7 @@ npm start
 
 Finds work emails for recruiters and hiring managers. It never sends email.
 
-Setup (optional, enables discovery): create `.env.local` in this directory containing one line, `HUNTER_API_KEY=your_key`. It is git-ignored; never commit it. Hunter lookups may use credits on your Hunter plan, check your plan's limits.
+Setup (optional, enables discovery): copy `.env.example` to `.env.local` and set `HUNTER_API_KEY=your_key`. It is git-ignored; never commit it. Then run `npm run find -- --check-key` to confirm Hunter accepts the key and to see your plan usage. The check uses Hunter's account endpoint, which does not use credits. Other Hunter lookups may use credits on your plan, check your plan's limits.
 
 ```sh
 npm run find -- stripe.com --role recruiter     # discover recruiters (needs HUNTER_API_KEY)
