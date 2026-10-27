@@ -25,6 +25,8 @@ npm start
 
 Finds work emails for recruiters and hiring managers. It never sends email.
 
+The home page now has a search form: enter the recruiter's first name, last name, and company website, then click **Search for email**. An optional LinkedIn profile URL can be entered as a reference; it is validated locally but is not sent to the finder, stored, scraped, or used to identify an employer. Results show provider notes and email verification status; pattern guesses are explicitly unverified. Search has loading, error, no-result, and retry states. Editing the fields clears previous results.
+
 Setup (optional, enables discovery): create `.env.local` in this directory containing one line, `HUNTER_API_KEY=your_key`. It is git-ignored; never commit it. Hunter lookups may use credits on your Hunter plan, check your plan's limits.
 
 ```sh
@@ -54,13 +56,14 @@ Not yet verified against a live account: the Hunter calls follow Hunter's publis
 - The email finder: core in `src/server/finder/`, CLI in `scripts/find.ts`, API route in `src/app/api/find/route.ts`, tests in `tests/`.
 - Contribution guidance, a pull-request template, and a foundations guide for beginners.
 
-There is no finder UI, persistence, auth, sending, or sequence logic yet. Refreshing simply rerenders fixtures. PostgreSQL remains the eventual persistence target and is deliberately deferred. This starter is the foundation of the demo phase in AGENTS.md, not completion of that phase.
+There is no persistence, auth, sending, or sequence logic yet. Refreshing clears search state and rerenders fixtures. PostgreSQL remains the eventual persistence target and is deliberately deferred. This starter is the foundation of the demo phase in AGENTS.md, not completion of that phase.
 
 ## Where to look
 
 | File | Purpose |
 | --- | --- |
 | `src/app/page.tsx` | Server-rendered directory page; start learning here |
+| `src/features/finder/finder-search.tsx` | Interactive name/company finder form and results; optional LinkedIn reference |
 | `src/app/layout.tsx` | Shared document and metadata |
 | `src/app/globals.css` | Styling and mobile layout |
 | `src/features/contacts/types.ts` | Contract for public profile summaries |

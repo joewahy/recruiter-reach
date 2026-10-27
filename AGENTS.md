@@ -30,6 +30,8 @@ The user then reprioritized (October 26, 2026): a **working tool matters more th
 - The Hunter key comes only from the environment (`.env.local`, git-ignored). Lookups may use credits on the user's Hunter plan; keep that disclosed in the README and CLI help.
 - Guessed addresses are always `unverified`. If Hunter returns HTTP 451 for a person, return no address and do not guess one.
 
+On October 27, 2026 the user requested a home-page finder form and confirmed that a company website field should accompany the recruiter's first name, last name, and LinkedIn URL. The form uses the existing name/domain finder. LinkedIn is an optional, locally validated reference only; it is not a source of employer information and is not scraped or sent to a provider. The finder section may use the previously authorized live lookup when configured; keep the synthetic directory separately labeled as demo data.
+
 ## 3. Collaboration rules
 
 - Restate the intended behavior briefly before substantial implementation.
