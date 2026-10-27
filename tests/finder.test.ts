@@ -3,7 +3,7 @@ import { test } from "node:test";
 import { normalizeDomain } from "../src/server/finder/domain.ts";
 import { findContacts } from "../src/server/finder/find.ts";
 import { guessAddresses, splitName } from "../src/server/finder/guesser.ts";
-import { mapHunterStatus } from "../src/server/finder/hunter.ts";
+import { HunterError, hunterAccount, mapHunterStatus } from "../src/server/finder/hunter.ts";
 import type { FetchLike } from "../src/server/finder/hunter.ts";
 import { FinderInputError } from "../src/server/finder/types.ts";
 
@@ -166,4 +166,23 @@ test("identical concurrent lookups share one provider call", async () => {
   ]);
   assert.equal(calls.length, 1);
   assert.equal(a, b);
+});
+
+test("hunterAccount reads plan and usage, sends the key in a header, and maps auth errors", async () => {
+  const ok = fakeFetch(200, {
+    data: {
+      plan_name: "Free",
+      reset_date: "2026-11-01",
+      requests: { searches: { used: 2, available: 25 }, credits: { used: 1, available: 50 }, other: "x" },
+    },
+  });
+  const account = await hunterAccount("secret-key", ok.impl);
+  assert.equal(account.plan, "Free");
+  assert.deepEqual(account.usage, { searches: { used: 2, available: 25 }, credits: { used: 1, available: 50 } });
+  assert.equal(ok.calls[0].url.pathname, "/v2/account");
+  assert.equal(ok.calls[0].headers["X-API-KEY"], "secret-key");
+  assert.ok(!ok.calls[0].url.href.includes("secret-key"));
+
+  const bad = fakeFetch(401, {});
+  await assert.rejects(hunterAccount("nope", bad.impl), (e: unknown) => e instanceof HunterError && e.kind === "auth");
 });

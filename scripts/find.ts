@@ -1,5 +1,6 @@
 import { parseArgs } from "node:util";
 import { findContacts } from "../src/server/finder/find.ts";
+import { HunterError, hunterAccount } from "../src/server/finder/hunter.ts";
 import { FinderInputError, roleFilters } from "../src/server/finder/types.ts";
 import type { RoleFilter } from "../src/server/finder/types.ts";
 
@@ -9,6 +10,7 @@ const usage = `Usage: npm run find -- <domain> [options]
   -n, --name <name>   Guess/find one person's address ("Jane Doe")
   -r, --role <role>   ${roleFilters.join(" | ")} (default: any; used when no name is given)
   -l, --limit <n>     Max people from Hunter (default 10)
+      --check-key     Check HUNTER_API_KEY and show plan usage (no domain needed, uses no credits)
       --json          Print raw JSON
   -h, --help          Show this help
 
@@ -22,6 +24,7 @@ const { values, positionals } = parseArgs({
     role: { type: "string", short: "r", default: "any" },
     limit: { type: "string", short: "l" },
     json: { type: "boolean", default: false },
+    "check-key": { type: "boolean", default: false },
     help: { type: "boolean", short: "h", default: false },
   },
 });
@@ -34,6 +37,21 @@ function fail(message: string): never {
 if (values.help) {
   console.log(usage);
   process.exit(0);
+}
+if (values["check-key"]) {
+  const apiKey = (process.env.HUNTER_API_KEY ?? "").trim();
+  if (!apiKey) fail("HUNTER_API_KEY is not set. Put it in .env.local (see .env.example).");
+  try {
+    const account = await hunterAccount(apiKey, fetch);
+    console.log(`Hunter key is valid. Plan: ${account.plan ?? "unknown"}.`);
+    for (const [name, { used, available }] of Object.entries(account.usage)) {
+      console.log(`  ${name}: ${used} used of ${available}`);
+    }
+    if (account.resetDate) console.log(`  usage resets ${account.resetDate}`);
+    process.exit(0);
+  } catch (error) {
+    fail(error instanceof HunterError ? error.message : "Key check failed unexpectedly.");
+  }
 }
 if (positionals.length !== 1) fail(usage);
 if (!roleFilters.includes(values.role as RoleFilter)) fail(`--role must be one of: ${roleFilters.join(", ")}`);
