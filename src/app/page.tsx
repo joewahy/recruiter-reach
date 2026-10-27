@@ -30,7 +30,7 @@ export default function HomePage() {
       </section>
       <aside className="next-step" aria-labelledby="next-title">
         <div><p className="eyebrow">BUILD TOGETHER</p><h2 id="next-title">Small steps. Shared ownership.</h2></div>
-        <p>Next up: turn this directory into a searchable experience. The repository’s learning plan contains six milestones, owner suggestions, and debugging exercises.</p>
+        <p>Next up: turn this directory into a searchable experience. The repository’s docs cover a beginner working method and debugging exercises.</p>
       </aside>
       <footer>Starter only. No email discovery, sending, account system, or saved data yet.</footer>
     </main>

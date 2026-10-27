@@ -26,7 +26,6 @@ npm start
 - Next.js App Router and strict TypeScript.
 - A responsive page rendering three invented recruiter/hiring-manager profiles.
 - A shared public-profile type and a separate fixture module.
-- Six learning milestones and twelve issue drafts, with proposed alternating owners.
 - Contribution guidance, a pull-request template, and a foundations guide for beginners.
 
 There is no search, persistence, auth, email lookup, sending, or sequence logic yet. Refreshing simply rerenders fixtures. PostgreSQL remains the eventual persistence target and is deliberately deferred. This starter is the foundation of the demo phase in AGENTS.md, not completion of that phase.
@@ -41,8 +40,7 @@ There is no search, persistence, auth, email lookup, sending, or sequence logic 
 | `src/features/contacts/types.ts` | Contract for public profile summaries |
 | `src/features/contacts/demo-people.ts` | Invented example data; contains no email addresses |
 | `docs/FOUNDATIONS.md` | Git, issues, web basics, TypeScript, testing, and privacy background |
-| `docs/LEARNING_PLAN.md` | Six milestones, responsibilities, dependencies, and review gates |
-| `docs/issues/` | Ready-to-use issue bodies; not published GitHub issues |
+| `docs/LEARNING_PLAN.md` | Beginner working method, vocabulary, and review habit (no roadmap yet) |
 | `docs/DEBUGGING.md` | Debugging workflow and optional exercises |
 | `CONTRIBUTING.md` | Two-person branch and PR workflow |
 | `AGENTS.md` | Product requirements and agent guidance |
@@ -51,7 +49,7 @@ No broken behavior has been intentionally planted. Debugging exercises run on di
 
 ## First session together
 
-Both run the app, trace how the fixture reaches the page, and each change one profile locally. Then read the learning plan, agree on owners, and take RR-01 and RR-02. Owner A is @lakerss6 and owner B is @joewahy. All 12 issues are published and assigned on GitHub, grouped by milestone; issues marked `blocked` wait on earlier ones. Both collaborators are beginners; start with the guided first steps in each issue. Do not build all six milestones at once.
+Both run the app, trace how the fixture reaches the page, and each change one profile locally. Then read the working method in `docs/LEARNING_PLAN.md` and agree on the next roadmap together. Both collaborators (@lakerss6 and @joewahy) are beginners. There is no roadmap yet; build one small step at a time.
 
 ## Technical reference
 
