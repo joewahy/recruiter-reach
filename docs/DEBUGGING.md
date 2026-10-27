@@ -20,6 +20,12 @@
 | Production start fails | Run `npm run build` before `npm start`; read the first build error |
 | A change disappeared after reload | Starter fixtures are read-only; persistence is not implemented yet |
 | No logs in browser | page.tsx is a Server Component; inspect the dev-server terminal |
+| `.env.local not found. Continuing without it.` | Normal without a key. Create `.env.local` with `HUNTER_API_KEY=...` to enable Hunter |
+| "needs HUNTER_API_KEY" | Company-wide search needs a key; otherwise pass `--name "First Last"` to get guesses |
+| "Hunter rejected the API key" | The key is wrong or revoked; check it on your Hunter account page, no quotes or spaces in `.env.local` |
+| "usage limit reached" or "rate limit" | Your Hunter plan's credits or request rate ran out; wait or check your plan |
+| Every address is `unverified` | Expected for guesses. Only Hunter results carry a provider verification status |
+| `npm test` or `npm run find` fails to start | Check Node is 22.13+; these scripts use Node's built-in TypeScript stripping |
 
 ## Optional exercises on a disposable branch
 

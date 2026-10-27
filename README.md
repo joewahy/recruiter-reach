@@ -65,6 +65,12 @@ There is no finder UI, persistence, auth, sending, or sequence logic yet. Refres
 | `src/app/globals.css` | Styling and mobile layout |
 | `src/features/contacts/types.ts` | Contract for public profile summaries |
 | `src/features/contacts/demo-people.ts` | Invented example data; contains no email addresses |
+| `src/server/finder/find.ts` | Email finder entry point: chooses Hunter or guesses, returns normalized results |
+| `src/server/finder/hunter.ts` | Hunter adapter: calls, error mapping, status normalization |
+| `src/server/finder/guesser.ts` | Name parsing, address patterns, mail-server (MX) check |
+| `scripts/find.ts` | `npm run find` command-line interface |
+| `src/app/api/find/route.ts` | `GET /api/find` JSON route |
+| `tests/finder.test.ts` | Finder tests with a fake Hunter and DNS |
 | `docs/FOUNDATIONS.md` | Git, issues, web basics, TypeScript, testing, and privacy background |
 | `docs/LEARNING_PLAN.md` | Beginner working method, vocabulary, and review habit (no roadmap yet) |
 | `docs/DEBUGGING.md` | Debugging workflow and optional exercises |
@@ -79,8 +85,10 @@ Both run the app, trace how the fixture reaches the page, and each change one pr
 
 ## Technical reference
 
-The scaffold follows the [official Next.js manual installation guide](https://nextjs.org/docs/app/getting-started/installation). The project uses plain CSS to keep the first lesson small; styling libraries and a test runner can be introduced when needed.
+The scaffold follows the [official Next.js manual installation guide](https://nextjs.org/docs/app/getting-started/installation). The project uses plain CSS to keep the first lesson small; styling libraries can be introduced when needed. Tests use Node's built-in test runner (`npm test`), so there is no test dependency yet.
 
 ## Starter verification
 
 Verified during setup: clean `npm ci`, TypeScript checking, production build, and an HTTP smoke check returning 200 with the demo label and all three fictional profiles. Browser interaction and visual QA were not performed. The temporary verification server was stopped; use `npm run dev` to work locally. GitHub Actions is configured but has not run remotely.
+
+Verified for the email finder (issue #16): `npm test` (13 passing, fake Hunter and DNS), `npm run typecheck`, `npm run build`, `npm run find` for a missing key, a bad domain and a name guess, and `curl` against `npm start` for `/api/find` success and 400 cases. Not verified: any call to the real Hunter API, `npm test` in CI, or the browser.

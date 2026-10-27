@@ -40,8 +40,10 @@ Then open a PR on GitHub. Your partner reviews it, you fix feedback, and it is m
 - A **browser** (the client) asks a **server** for a page. The request and the answer follow **HTTP**.
 - A **URL** can carry state after a `?`, like `/search?role=recruiter&q=ana`. These are **query parameters**. A search feature can keep filters here so a link can be shared.
 - **JSON** is the plain-text format programs use to exchange data, like `{"id": "p1", "name": "Ana"}`.
-- An **API endpoint** is a server address that receives a request and returns data instead of a page. A demo email lookup would be one.
+- An **API endpoint** is a server address that receives a request and returns data instead of a page. `GET /api/find` in this project is one: it returns email lookup results as JSON.
 - **localStorage** keeps small data in one browser on one computer. It is not secure and not shared between people. It is fine for synthetic demo data, never for real private data.
+- An **MX record** is a DNS entry saying which servers receive email for a domain. The finder checks for one before suggesting guessed addresses; having one does not mean a specific mailbox exists.
+- An **API key** identifies your account to a service such as Hunter. Treat it like a password: keep it in `.env.local`, send it in a header, and never paste it into chat, issues, or commits.
 - A **cookie** is data the browser sends with each request. Login sessions normally use cookies.
 - An **environment variable** holds configuration or a secret outside the code, usually in a `.env` file. `.gitignore` already excludes `.env*`. Never commit keys, tokens, or passwords.
 

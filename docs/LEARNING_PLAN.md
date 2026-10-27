@@ -1,6 +1,6 @@
 # Beginner working method
 
-There is no learning roadmap right now. The previous plan was removed; what replaces it will be agreed in a separate issue. Only the minimal starter is implemented. Real data providers and live mail remain a later, separately discussed phase.
+There is no learning roadmap right now. The previous plan was removed; what replaces it will be agreed in a separate issue. The starter and a command-line/API email finder (issue #16) are implemented. Live mail and a final data-provider choice remain a later, separately discussed phase.
 
 Both collaborators, @lakerss6 and @joewahy, are beginners. Alternate implementation and review duties so neither person is confined to frontend or backend.
 
