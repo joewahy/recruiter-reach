@@ -1,17 +1,17 @@
 # Working together
 
-Read AGENTS.md and docs/LEARNING_PLAN.md first. New to Git, issues, or web apps? Start with docs/FOUNDATIONS.md. Owner A is @lakerss6 (the user); Owner B is @joewahy (their friend), based on the supplied username order. Owners below are proposals, not GitHub assignments. Each person both implements and reviews; rotate responsibilities each milestone.
+Read AGENTS.md and docs/LEARNING_PLAN.md first. New to Git, issues, or web apps? Start with docs/FOUNDATIONS.md. The collaborators are @lakerss6 and @joewahy. Each person both implements and reviews; rotate responsibilities.
 
 ## One issue, one branch, one small PR
 
 1. Agree which issue you own and read its dependencies.
 2. Start from `main`: `git switch main && git pull`.
-3. Create a descriptive branch, such as `feat/rr-03-name-search` or `fix/rr-04-filter-reset`.
+3. Create a descriptive branch, such as `feat/name-search` or `fix/filter-reset`.
 4. Make a small change, run the relevant checks, and inspect `git diff` and `git status` before committing.
 5. Open a PR explaining behavior, verification, and what you learned. Your partner reviews it.
 6. Resolve feedback and merge according to your team's agreed workflow. Pull the updated integration branch before starting the next task.
 
-Never both edit the same shared file without coordinating. RR-03 should expose a search component boundary before RR-04 adds filters. Agree on types and exports together before splitting work. Ask before adding dependencies or changing a shared contract.
+Never both edit the same shared file without coordinating. Agree on types and exports together before splitting work. Ask before adding dependencies or changing a shared contract.
 
 ## Review checklist
 
@@ -26,4 +26,4 @@ Record bugs in an issue with reproduction steps, expected/actual behavior, envir
 
 ## Suggested pairing rhythm
 
-Start each milestone with a 15-minute contract discussion. Implement separately where possible, swap reviews, and end with a short demo and one lesson each. Estimates in the plan are practice-session ranges, not deadlines. Ask for hints before asking an agent to implement an entire learning issue.
+Start each task with a 15-minute contract discussion. Implement separately where possible, swap reviews, and end with a short demo and one lesson each. Ask for hints before asking an agent to implement an entire learning task.

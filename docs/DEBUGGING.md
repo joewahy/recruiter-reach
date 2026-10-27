@@ -18,18 +18,18 @@
 | Import error | Check filename case, exported symbol, and the `@/*` alias |
 | CSS appears missing | Confirm globals.css is imported by layout.tsx and inspect the matched CSS rule |
 | Production start fails | Run `npm run build` before `npm start`; read the first build error |
-| A change disappeared after reload | Starter fixtures are read-only; persistence is RR-06, not implemented yet |
+| A change disappeared after reload | Starter fixtures are read-only; persistence is not implemented yet |
 | No logs in browser | page.tsx is a Server Component; inspect the dev-server terminal |
 
 ## Optional exercises on a disposable branch
 
-These are drills, not existing bugs and not tasks to merge broken code.
+These are drills, not existing bugs and not tasks to merge broken code. Try them once the matching feature exists.
 
-- **After milestone 1:** temporarily misspell a property access. Read the TypeScript error, locate its source, and restore it. Explain why static types caught it before runtime.
-- **After milestone 2:** reproduce a whitespace-only query and a role + location combination. If matching is wrong, inspect each predicate before changing state code.
-- **After milestone 3:** corrupt only the app's demo-storage key in DevTools. The app should recover gracefully. Then simulate a failed lookup and double-click retry; ensure one active request per person.
-- **After milestone 4:** put `=1+1` in a note and export it. Inspect the raw CSV; spreadsheet formula text must be neutralized and quoted safely.
-- **After milestone 5:** approve a draft, edit its recipient, and try delivery. Approval must no longer authorize it. Capture this as a domain regression test.
-- **After milestone 6:** queue an approved simulated send, then simulate a reply before dispatch. It must stop. Retry the same job and ensure no second simulated send occurs.
+- **Type errors:** temporarily misspell a property access. Read the TypeScript error, locate its source, and restore it. Explain why static types caught it before runtime.
+- **Search:** reproduce a whitespace-only query and a role + location combination. If matching is wrong, inspect each predicate before changing state code.
+- **Saved data:** corrupt only the app's demo-storage key in DevTools. The app should recover gracefully. Then simulate a failed lookup and double-click retry; ensure one active request per person.
+- **CSV export:** put `=1+1` in a note and export it. Inspect the raw CSV; spreadsheet formula text must be neutralized and quoted safely.
+- **Approval:** approve a draft, edit its recipient, and try delivery. Approval must no longer authorize it. Capture this as a domain regression test.
+- **Stop rules:** queue an approved simulated send, then simulate a reply before dispatch. It must stop. Retry the same job and ensure no second simulated send occurs.
 
 Keep a brief `Hypothesis → Evidence → Fix → Prevention` note in bug reports. Do not log real contact details, tokens, or full mailbox content.

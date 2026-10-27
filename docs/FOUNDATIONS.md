@@ -1,6 +1,6 @@
 # Foundations
 
-Background for the learning milestones. Skim it now and come back when an issue mentions a term you do not know. Product rules live in `AGENTS.md`; the milestone order lives in `docs/LEARNING_PLAN.md`.
+Background for the learning project. Skim it now and come back when an issue mentions a term you do not know. Product rules live in `AGENTS.md`; the working method lives in `docs/LEARNING_PLAN.md`.
 
 ## 1. Git and GitHub
 
@@ -19,10 +19,10 @@ Daily loop:
 
 ```sh
 git switch main && git pull          # start from the latest shared code
-git switch -c feat/rr-03-name-search # one branch per issue
+git switch -c feat/name-search # one branch per issue
 git status                           # see what changed
 git add <files> && git commit -m "Add name search"
-git push -u origin feat/rr-03-name-search
+git push -u origin feat/name-search
 ```
 
 Then open a PR on GitHub. Your partner reviews it, you fix feedback, and it is merged. Pull `main` again before the next task. Commit small, working steps. Read `git diff` before you commit.
@@ -34,16 +34,15 @@ Then open a PR on GitHub. Your partner reviews it, you fix feedback, and it is m
 - Put `Closes #12` in the PR description. Merging then closes the issue and links the two.
 - Discuss the task in the issue comments so the reasoning stays with the work. Write `Blocked by #8` when you are waiting on another issue.
 - Labels describe the type (`bug`, `feature`, `docs`, `blocked`). Milestones group issues into a goal and show percent complete.
-- The `RR-xx` names in `docs/issues/` are local planning IDs. GitHub assigns its own numbers when an issue is published.
 
 ## 2. How a web app works
 
 - A **browser** (the client) asks a **server** for a page. The request and the answer follow **HTTP**.
-- A **URL** can carry state after a `?`, like `/search?role=recruiter&q=ana`. These are **query parameters**. RR-04 keeps filters here so a link can be shared.
+- A **URL** can carry state after a `?`, like `/search?role=recruiter&q=ana`. These are **query parameters**. A search feature can keep filters here so a link can be shared.
 - **JSON** is the plain-text format programs use to exchange data, like `{"id": "p1", "name": "Ana"}`.
-- An **API endpoint** is a server address that receives a request and returns data instead of a page. RR-05 builds one.
-- **localStorage** keeps small data in one browser on one computer. It is not secure and not shared between people. It is fine for synthetic demo data (RR-06), never for real private data.
-- A **cookie** is data the browser sends with each request. Login sessions normally use cookies (RR-12).
+- An **API endpoint** is a server address that receives a request and returns data instead of a page. A demo email lookup would be one.
+- **localStorage** keeps small data in one browser on one computer. It is not secure and not shared between people. It is fine for synthetic demo data, never for real private data.
+- A **cookie** is data the browser sends with each request. Login sessions normally use cookies.
 - An **environment variable** holds configuration or a secret outside the code, usually in a `.env` file. `.gitignore` already excludes `.env*`. Never commit keys, tokens, or passwords.
 
 ### What Next.js does here
@@ -80,7 +79,7 @@ Write a test when the code:
 
 - Contains logic that can be wrong in non-obvious ways (filter combinations, CSV escaping, sequence timing).
 - Fixes a bug. Make the test fail first, then fix, so the bug cannot quietly return. This is a **regression test**.
-- Could expose data, charge money, or send a message. Approval and stop rules in RR-10 and RR-11 are the clearest examples.
+- Could expose data, charge money, or send a message. Approval and stop rules are the clearest examples.
 
 Skip tests for layout, styling, wording, and throwaway experiments. A passing build proves the code compiles, not that the feature works. Demo the acceptance criteria by hand too.
 
