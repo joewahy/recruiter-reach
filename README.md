@@ -19,16 +19,42 @@ npm run build
 npm start
 ```
 
-`npm start` serves the production build; run `build` first. The lockfile keeps both developers on the same dependency versions. No environment variables, database, API keys, or paid services are needed for this starter.
+`npm start` serves the production build; run `build` first. The lockfile keeps both developers on the same dependency versions. The demo page needs no environment variables, database, or paid services. The email finder below works without a key for name-based guessing and needs a Hunter API key for company-wide discovery.
+
+## Email finder
+
+Finds work emails for recruiters and hiring managers. It never sends email.
+
+Setup (optional, enables discovery): create `.env.local` in this directory containing one line, `HUNTER_API_KEY=your_key`. It is git-ignored; never commit it. Hunter lookups may use credits on your Hunter plan, check your plan's limits.
+
+```sh
+npm run find -- stripe.com --role recruiter     # discover recruiters (needs HUNTER_API_KEY)
+npm run find -- stripe.com --role hiring_manager
+npm run find -- stripe.com --name "Jane Doe"    # find or guess one person's address
+npm run find -- stripe.com --json               # raw JSON
+npm test                                        # unit tests with a fake Hunter and DNS
+```
+
+Or over HTTP while `npm run dev` is running: `GET /api/find?domain=stripe.com&role=recruiter` (also `name`, `limit`). The route has no login and only a small in-memory rate limit, so use it locally and do not deploy it as is.
+
+How to read results:
+
+- With a key and a name, Hunter's Email Finder is tried first. Without a key, or if Hunter finds nothing, you get **pattern guesses** (`first.last@`, `flast@`, and so on) after a check that the domain has mail servers. Guesses are always `unverified`; they are not confirmed to exist.
+- Hunter results carry Hunter's own verification status and check date. A verified address is an assessment at that time, not a delivery guarantee.
+- `hiring_manager` is matched by title keywords, which is a heuristic. `recruiter` uses Hunter's HR department filter.
+- No result is a valid outcome. If Hunter has been asked not to process a person's data (HTTP 451), no address is returned and none is guessed.
+
+Not yet verified against a live account: the Hunter calls follow Hunter's published API docs and are tested only with a fake `fetch`. Run once with your key and check a result before relying on it.
 
 ## What exists today
 
 - Next.js App Router and strict TypeScript.
 - A responsive page rendering three invented recruiter/hiring-manager profiles.
 - A shared public-profile type and a separate fixture module.
+- The email finder: core in `src/server/finder/`, CLI in `scripts/find.ts`, API route in `src/app/api/find/route.ts`, tests in `tests/`.
 - Contribution guidance, a pull-request template, and a foundations guide for beginners.
 
-There is no search, persistence, auth, email lookup, sending, or sequence logic yet. Refreshing simply rerenders fixtures. PostgreSQL remains the eventual persistence target and is deliberately deferred. This starter is the foundation of the demo phase in AGENTS.md, not completion of that phase.
+There is no finder UI, persistence, auth, sending, or sequence logic yet. Refreshing simply rerenders fixtures. PostgreSQL remains the eventual persistence target and is deliberately deferred. This starter is the foundation of the demo phase in AGENTS.md, not completion of that phase.
 
 ## Where to look
 
