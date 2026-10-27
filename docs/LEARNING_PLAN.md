@@ -19,6 +19,8 @@ One session can be roughly 60–90 focused minutes; adjust to your schedules. Bo
 
 ## Beginner working method
 
+New to Git, issues, or how a web app works? Read [FOUNDATIONS.md](FOUNDATIONS.md) first.
+
 Start only RR-01 and RR-02 now. Read the issue together, then work on one acceptance criterion at a time. A checkbox is done when you can demonstrate it, not merely when the code compiles.
 
 1. Read the starting files and explain their current behavior out loud.

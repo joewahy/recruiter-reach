@@ -27,7 +27,7 @@ npm start
 - A responsive page rendering three invented recruiter/hiring-manager profiles.
 - A shared public-profile type and a separate fixture module.
 - Six learning milestones and twelve issue drafts, with proposed alternating owners.
-- Contribution guidance and feature, bug, and pull-request templates.
+- Contribution guidance, a pull-request template, and a foundations guide for beginners.
 
 There is no search, persistence, auth, email lookup, sending, or sequence logic yet. Refreshing simply rerenders fixtures. PostgreSQL remains the eventual persistence target and is deliberately deferred. This starter is the foundation of the demo phase in AGENTS.md, not completion of that phase.
 
@@ -40,6 +40,7 @@ There is no search, persistence, auth, email lookup, sending, or sequence logic 
 | `src/app/globals.css` | Styling and mobile layout |
 | `src/features/contacts/types.ts` | Contract for public profile summaries |
 | `src/features/contacts/demo-people.ts` | Invented example data; contains no email addresses |
+| `docs/FOUNDATIONS.md` | Git, issues, web basics, TypeScript, testing, and privacy background |
 | `docs/LEARNING_PLAN.md` | Six milestones, responsibilities, dependencies, and review gates |
 | `docs/issues/` | Ready-to-use issue bodies; not published GitHub issues |
 | `docs/DEBUGGING.md` | Debugging workflow and optional exercises |

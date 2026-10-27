@@ -1,11 +1,11 @@
 # Working together
 
-Read AGENTS.md and docs/LEARNING_PLAN.md first. Owner A is @lakerss6 (the user); Owner B is @joewahy (their friend), based on the supplied username order. Owners below are proposals, not GitHub assignments. Each person both implements and reviews; rotate responsibilities each milestone.
+Read AGENTS.md and docs/LEARNING_PLAN.md first. New to Git, issues, or web apps? Start with docs/FOUNDATIONS.md. Owner A is @lakerss6 (the user); Owner B is @joewahy (their friend), based on the supplied username order. Owners below are proposals, not GitHub assignments. Each person both implements and reviews; rotate responsibilities each milestone.
 
 ## One issue, one branch, one small PR
 
 1. Agree which issue you own and read its dependencies.
-2. Start from the team's agreed integration branch. The repository currently starts on `1-create-a-project-first`; do not assume `main` exists until the first commit is published.
+2. Start from `main`: `git switch main && git pull`.
 3. Create a descriptive branch, such as `feat/rr-03-name-search` or `fix/rr-04-filter-reset`.
 4. Make a small change, run the relevant checks, and inspect `git diff` and `git status` before committing.
 5. Open a PR explaining behavior, verification, and what you learned. Your partner reviews it.
@@ -22,7 +22,7 @@ Never both edit the same shared file without coordinating. RR-03 should expose a
 - Are there no secrets, real contact data, generated build output, or accidental unrelated changes?
 - Can both people reproduce the reported behavior?
 
-Record bugs using the bug template: reproduction, expected/actual behavior, environment, and evidence. Avoid secrets or real personal details in logs and screenshots. Do not fix an unreported bug by hiding its error message.
+Record bugs in an issue with reproduction steps, expected/actual behavior, environment, and evidence. Avoid secrets or real personal details in logs and screenshots. Do not fix an unreported bug by hiding its error message.
 
 ## Suggested pairing rhythm
 
