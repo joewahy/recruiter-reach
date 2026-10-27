@@ -4,7 +4,7 @@ Scope: gradually complete the demo experience, then add a persistent foundation.
 
 Only the minimal starter is implemented. No later milestone is marked complete.
 
-**Suggested task split:** A = @lakerss6 (you), B = @joewahy (your friend), using the supplied username order. Both collaborators are beginners. Publishing and assigning all 12 issues on `joewahy/recruiter-reach` is authorized; authenticated GitHub access is still needed, so assignments currently remain local. Alternate implementation/review duties so neither person is confined to frontend or backend. Milestones are practice sessions, not a six-week commitment.
+**Suggested task split:** A = @lakerss6 (you), B = @joewahy (your friend), using the supplied username order. Both collaborators are beginners. All 12 issues are published and assigned on `joewahy/recruiter-reach`. Alternate implementation/review duties so neither person is confined to frontend or backend. Milestones are practice sessions, not a six-week commitment.
 
 | Milestone | Outcome | @lakerss6 (A) | @joewahy (B) | Suggested effort each |
 | --- | --- | --- | --- | --- |
@@ -46,19 +46,19 @@ At every gate: author demos acceptance criteria, reviewer reproduces one edge ca
 
 ## Issue index
 
-RR numbers are local planning IDs, not GitHub issue numbers. Files in `docs/issues/` are complete issue bodies with owners, dependencies, acceptance criteria, learning goals, and debugging prompts. Publish them only once and record GitHub URLs here after creation.
+RR numbers are local planning IDs, not GitHub issue numbers (RR-01 is #2, and so on). Files in `docs/issues/` are the original issue bodies; the published GitHub issues are now the source of truth for status, owners, and discussion. Do not publish them again.
 
 | Local ID | Draft | Status |
 | --- | --- | --- |
-| RR-01 | [Component boundary](issues/RR-01.md) | Open draft |
-| RR-02 | [Fixtures and types](issues/RR-02.md) | Open draft |
-| RR-03 | [Text search](issues/RR-03.md) | Open draft |
-| RR-04 | [Filters and URL state](issues/RR-04.md) | Open draft |
-| RR-05 | [Demo lookup](issues/RR-05.md) | Open draft |
-| RR-06 | [Saved lists](issues/RR-06.md) | Open draft |
-| RR-07 | [Opportunities](issues/RR-07.md) | Open draft |
-| RR-08 | [Notes and export](issues/RR-08.md) | Open draft |
-| RR-09 | [Composer](issues/RR-09.md) | Open draft |
-| RR-10 | [Approval and simulated send](issues/RR-10.md) | Open draft |
-| RR-11 | [Follow-ups and stop rules](issues/RR-11.md) | Open draft |
-| RR-12 | [Authenticated persistence slice](issues/RR-12.md) | Open draft |
+| RR-01 | [Component boundary](issues/RR-01.md) | [Open: #2](https://github.com/joewahy/recruiter-reach/issues/2) |
+| RR-02 | [Fixtures and types](issues/RR-02.md) | [Open: #3](https://github.com/joewahy/recruiter-reach/issues/3) |
+| RR-03 | [Text search](issues/RR-03.md) | [Open: #4](https://github.com/joewahy/recruiter-reach/issues/4) |
+| RR-04 | [Filters and URL state](issues/RR-04.md) | [Open: #5](https://github.com/joewahy/recruiter-reach/issues/5) |
+| RR-05 | [Demo lookup](issues/RR-05.md) | [Open: #6](https://github.com/joewahy/recruiter-reach/issues/6) |
+| RR-06 | [Saved lists](issues/RR-06.md) | [Open: #7](https://github.com/joewahy/recruiter-reach/issues/7) |
+| RR-07 | [Opportunities](issues/RR-07.md) | [Open: #8](https://github.com/joewahy/recruiter-reach/issues/8) |
+| RR-08 | [Notes and export](issues/RR-08.md) | [Open: #9](https://github.com/joewahy/recruiter-reach/issues/9) |
+| RR-09 | [Composer](issues/RR-09.md) | [Open: #10](https://github.com/joewahy/recruiter-reach/issues/10) |
+| RR-10 | [Approval and simulated send](issues/RR-10.md) | [Open: #11](https://github.com/joewahy/recruiter-reach/issues/11) |
+| RR-11 | [Follow-ups and stop rules](issues/RR-11.md) | [Open: #12](https://github.com/joewahy/recruiter-reach/issues/12) |
+| RR-12 | [Authenticated persistence slice](issues/RR-12.md) | [Open: #13](https://github.com/joewahy/recruiter-reach/issues/13) |
