@@ -29,7 +29,7 @@ The home page searches by **first name, last name, and company**. Enter a compan
 
 - Company names are passed to Hunter's Email Finder as `company`, without inventing a domain. These searches require `HUNTER_API_KEY`. A company-name search with no match returns an empty result and suggests trying the exact website.
 - Websites use the existing domain lookup. Without a key, or when no email is found, this can return clearly labeled unverified email-pattern guesses after an MX check. These addresses are not confirmed mailboxes.
-- Results show source and verification status. Changing inputs clears stale results. There is no saved history and no email is sent.
+- Results show source and verification status. Results stay labeled with the submitted search while you edit the search fields; a new submission replaces them. There is no saved history and no email is sent.
 
 The homepage uses an indigo/navy palette, a responsive split introduction and search layout, and separately labeled synthetic example profiles. The previous LinkedIn-only flow remains in the backend/API for existing callers, but it is no longer the homepage search method.
 
@@ -58,9 +58,9 @@ Not yet verified against a live account: the Hunter calls follow Hunter's publis
 
 ### Recruiter email draft
 
-Each search result with email candidates includes an editable draft: recipient selection, subject, message, and separate copy buttons. The template uses the returned recruiter/company when available, otherwise the search inputs. It expresses software engineering internship interest and asks about next steps. It contains `[Your name]` rather than either collaborator's identity, and includes no school or project claims. Replace the placeholder before using it.
+Search/results and composition occupy separate panels. Choose **Draft email** beside an address to open an editable draft in the email workspace: recipient selection, subject, message, and copy controls. The template uses the returned recruiter/company when available, otherwise the search inputs. It expresses software engineering internship interest and asks about next steps. It contains `[Your name]` rather than either collaborator's identity, and includes no school or project claims. Replace the placeholder before using it.
 
-Multiple candidates require choosing an address; unverified results remain labeled. Copying only writes to the clipboard; there is no sending or mailbox connection. Drafts are held in page memory and disappear on reload, another search, or editing search inputs. Clipboard failures show a manual-copy instruction.
+Multiple candidates require choosing an address; unverified results remain labeled. Copying only writes to the clipboard; there is no sending or mailbox connection. Drafts are held in page memory per result person. Closing the editor, changing search inputs, or switching between results preserves edits. A new search replaces them; if you edited a draft, a confirmation lets you cancel and keep it. Reloading the page clears drafts. Clipboard failures show a manual-copy instruction.
 
 **Open in Gmail** opens the edited draft in a Gmail compose tab with recipient, subject, and body prefilled. Select an address, fill the subject/body, and replace placeholders such as `[Your name]` to enable it. Check the signed-in Gmail account and review the message before sending it yourself. This uses a compose link, not Google OAuth or Gmail API access; no credentials or mailbox permissions are required. Opening the draft does not send it, and the app does not know whether you later send or discard it. Long messages can exceed browser/Gmail URL limits; the copy buttons remain available as a fallback.
 
@@ -113,3 +113,10 @@ Verified for the email finder (issue #16): `npm test` (13 passing, fake Hunter a
 LinkedIn-only update: tests cover URL validation, Hunter parameters, identity mapping, incomplete results, opt-outs, failures, duplicate requests, public structured-data extraction, blocked pages, login redirects, and response limits. Tests use fake responses and do not consume credits. A live check of the user-supplied `kendraansotigue` profile returned no Hunter match and HTTP 999 on the public read. No profile details or email were retrieved for that URL. The general URL-only workflow is therefore implemented, but successful retrieval of this specific profile remains blocked by source availability.
 
 Name/company update: company-name routing, website fallback, missing-key/name validation, no matches, auth failures, and opt-outs are covered by `tests/company.test.ts`. Tests use fake provider responses; the new company-name path has not been live-tested against Hunter.
+
+
+## Outreach workspace review
+
+The main workflow has a bounded search/results panel and a separate editor on desktop, stacked on small screens. Each address exposes a Draft email action and its verification status. Closing the editor returns focus to the originating action. Opening an editor focuses its heading. The Gmail action displays its current blocking reason (for example, replace `[Your name]`) next to the controls. The synthetic directory is expandable and remains clearly labeled.
+
+Manual checks for the layout update: search with fake provider data; open an address, edit the message, close and reopen it; switch contacts and return; edit the search inputs without submitting; cancel the confirmation for a new search and verify the draft remains; verify a confirmed new search replaces old drafts; replace placeholders and inspect the Gmail recipient/subject/body; check keyboard focus and the stacked layout at mobile widths. Browser interaction checks have not been run in this environment.
