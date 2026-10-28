@@ -154,15 +154,16 @@ export async function hunterDomainSearch(
 }
 
 export async function hunterEmailFinder(
-  domain: string,
+  domain: string | undefined,
   name: { first: string; last: string },
   apiKey: string,
   fetchImpl: FetchLike,
+  company?: string,
 ): Promise<FoundPerson | null> {
   let body: Record<string, unknown>;
   try {
     body = record(
-      await hunterGet("/email-finder", { domain, first_name: name.first, last_name: name.last }, apiKey, fetchImpl),
+      await hunterGet("/email-finder", { domain, company, first_name: name.first, last_name: name.last }, apiKey, fetchImpl),
     );
   } catch (error) {
     if (error instanceof HunterError && error.kind === "not_found") return null;
@@ -173,9 +174,40 @@ export async function hunterEmailFinder(
   if (!address) return null;
   return {
     name: fullName(data.first_name, data.last_name),
+    company: text(data.company),
     title: text(data.position),
     linkedinUrl: text(data.linkedin_url),
     emails: [toCandidate(address, data.verification, data.score)],
     sourceUrls: sourceUrls(data.sources),
+  };
+}
+
+/** Hunter accepts a profile handle directly; no LinkedIn page is fetched. */
+export async function hunterLinkedinFinder(
+  handle: string,
+  apiKey: string,
+  fetchImpl: FetchLike,
+): Promise<{ person: FoundPerson | null; domain: string | null }> {
+  let body: Record<string, unknown>;
+  try {
+    body = record(await hunterGet("/email-finder", { linkedin_handle: handle }, apiKey, fetchImpl));
+  } catch (error) {
+    if (error instanceof HunterError && error.kind === "not_found") return { person: null, domain: null };
+    throw error;
+  }
+  const data = record(body.data);
+  const address = text(data.email);
+  const domain = text(data.domain);
+  if (!address && !text(data.first_name) && !text(data.last_name) && !text(data.company)) return { person: null, domain };
+  return {
+    domain,
+    person: {
+      name: fullName(data.first_name, data.last_name),
+      company: text(data.company),
+      title: text(data.position),
+      linkedinUrl: `https://www.linkedin.com/in/${encodeURIComponent(handle)}`,
+      emails: address ? [toCandidate(address, data.verification, data.score)] : [],
+      sourceUrls: sourceUrls(data.sources),
+    },
   };
 }

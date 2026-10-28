@@ -25,7 +25,13 @@ npm start
 
 Finds work emails for recruiters and hiring managers. It never sends email.
 
-The home page now has a search form: enter the recruiter's first name, last name, and company website, then click **Search for email**. An optional LinkedIn profile URL can be entered as a reference; it is validated locally but is not sent to the finder, stored, scraped, or used to identify an employer. Results show provider notes and email verification status; pattern guesses are explicitly unverified. Search has loading, error, no-result, and retry states. Editing the fields clears previous results.
+The home page searches by **first name, last name, and company**. Enter a company name (such as Stripe) or website (such as stripe.com), then click **Find work email**.
+
+- Company names are passed to Hunter's Email Finder as `company`, without inventing a domain. These searches require `HUNTER_API_KEY`. A company-name search with no match returns an empty result and suggests trying the exact website.
+- Websites use the existing domain lookup. Without a key, or when no email is found, this can return clearly labeled unverified email-pattern guesses after an MX check. These addresses are not confirmed mailboxes.
+- Results show source and verification status. Changing inputs clears stale results. There is no saved history and no email is sent.
+
+The homepage uses an indigo/navy palette, a responsive split introduction and search layout, and separately labeled synthetic example profiles. The previous LinkedIn-only flow remains in the backend/API for existing callers, but it is no longer the homepage search method.
 
 Setup (optional, enables discovery): create `.env.local` in this directory containing one line, `HUNTER_API_KEY=your_key`. It is git-ignored; never commit it. Hunter lookups may use credits on your Hunter plan, check your plan's limits.
 
@@ -37,7 +43,7 @@ npm run find -- stripe.com --json               # raw JSON
 npm test                                        # unit tests with a fake Hunter and DNS
 ```
 
-Or over HTTP while `npm run dev` is running: `GET /api/find?domain=stripe.com&role=recruiter` (also `name`, `limit`). The route has no login and only a small in-memory rate limit, so use it locally and do not deploy it as is.
+Or over HTTP while `npm run dev` is running: `GET /api/find?company=Stripe&name=Jane%20Doe`, `GET /api/find?domain=stripe.com&role=recruiter` (also `name`, `limit`), or `GET /api/find?linkedinUrl=` followed by a URL-encoded LinkedIn profile URL. If both are supplied, LinkedIn takes precedence. The returned `domain` can be `null` for LinkedIn lookups when Hunter provides none. The route has no login and only a small in-memory rate limit, so use it locally and do not deploy it as is.
 
 How to read results:
 
@@ -49,6 +55,14 @@ How to read results:
 Not yet verified against a live account: the Hunter calls follow Hunter's published API docs and are tested only with a fake `fetch`. Run once with your key and check a result before relying on it.
 
 ## What exists today
+
+### Recruiter email draft
+
+Each search result with email candidates includes an editable draft: recipient selection, subject, message, and separate copy buttons. The template uses the returned recruiter/company when available, otherwise the search inputs. It expresses software engineering internship interest and asks about next steps. It contains `[Your name]` rather than either collaborator's identity, and includes no school or project claims. Replace the placeholder before using it.
+
+Multiple candidates require choosing an address; unverified results remain labeled. Copying only writes to the clipboard; there is no sending or mailbox connection. Drafts are held in page memory and disappear on reload, another search, or editing search inputs. Clipboard failures show a manual-copy instruction.
+
+**Open in Gmail** opens the edited draft in a Gmail compose tab with recipient, subject, and body prefilled. Select an address, fill the subject/body, and replace placeholders such as `[Your name]` to enable it. Check the signed-in Gmail account and review the message before sending it yourself. This uses a compose link, not Google OAuth or Gmail API access; no credentials or mailbox permissions are required. Opening the draft does not send it, and the app does not know whether you later send or discard it. Long messages can exceed browser/Gmail URL limits; the copy buttons remain available as a fallback.
 
 - Next.js App Router and strict TypeScript.
 - A responsive page rendering three invented recruiter/hiring-manager profiles.
@@ -63,7 +77,7 @@ There is no persistence, auth, sending, or sequence logic yet. Refreshing clears
 | File | Purpose |
 | --- | --- |
 | `src/app/page.tsx` | Server-rendered directory page; start learning here |
-| `src/features/finder/finder-search.tsx` | Interactive name/company finder form and results; optional LinkedIn reference |
+| `src/features/finder/finder-search.tsx` | First/last-name and company form, result states, and provider disclosures |
 | `src/app/layout.tsx` | Shared document and metadata |
 | `src/app/globals.css` | Styling and mobile layout |
 | `src/features/contacts/types.ts` | Contract for public profile summaries |
@@ -95,3 +109,7 @@ The scaffold follows the [official Next.js manual installation guide](https://ne
 Verified during setup: clean `npm ci`, TypeScript checking, production build, and an HTTP smoke check returning 200 with the demo label and all three fictional profiles. Browser interaction and visual QA were not performed. The temporary verification server was stopped; use `npm run dev` to work locally. GitHub Actions is configured but has not run remotely.
 
 Verified for the email finder (issue #16): `npm test` (13 passing, fake Hunter and DNS), `npm run typecheck`, `npm run build`, `npm run find` for a missing key, a bad domain and a name guess, and `curl` against `npm start` for `/api/find` success and 400 cases. Not verified: any call to the real Hunter API, `npm test` in CI, or the browser.
+
+LinkedIn-only update: tests cover URL validation, Hunter parameters, identity mapping, incomplete results, opt-outs, failures, duplicate requests, public structured-data extraction, blocked pages, login redirects, and response limits. Tests use fake responses and do not consume credits. A live check of the user-supplied `kendraansotigue` profile returned no Hunter match and HTTP 999 on the public read. No profile details or email were retrieved for that URL. The general URL-only workflow is therefore implemented, but successful retrieval of this specific profile remains blocked by source availability.
+
+Name/company update: company-name routing, website fallback, missing-key/name validation, no matches, auth failures, and opt-outs are covered by `tests/company.test.ts`. Tests use fake provider responses; the new company-name path has not been live-tested against Hunter.

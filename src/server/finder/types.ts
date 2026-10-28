@@ -1,7 +1,7 @@
 export type LookupOutcome = "not_requested" | "pending" | "found" | "not_found" | "failed";
 export type VerificationStatus = "unverified" | "valid" | "invalid" | "catch_all" | "unknown";
 export type RoleFilter = "recruiter" | "hiring_manager" | "any";
-export type ProviderName = "hunter" | "pattern_guess";
+export type ProviderName = "hunter" | "pattern_guess" | "public_profile";
 
 export const roleFilters: RoleFilter[] = ["recruiter", "hiring_manager", "any"];
 
@@ -17,6 +17,7 @@ export type EmailCandidate = {
 
 export type FoundPerson = {
   name: string;
+  company?: string | null;
   title: string | null;
   linkedinUrl: string | null;
   emails: EmailCandidate[];
@@ -24,14 +25,16 @@ export type FoundPerson = {
 };
 
 export type FinderInput = {
-  domain: string;
+  domain?: string;
+  company?: string;
+  linkedinUrl?: string;
   name?: string;
   role?: RoleFilter;
   limit?: number;
 };
 
 export type FinderResponse = {
-  domain: string;
+  domain: string | null;
   provider: ProviderName;
   outcome: LookupOutcome;
   people: FoundPerson[];
